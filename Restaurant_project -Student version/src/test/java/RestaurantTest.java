@@ -82,4 +82,21 @@ class RestaurantTest {
                 ()->restaurant.removeFromMenu("French fries"));
     }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    // Using TDD method to implement to display the total amount of the menu in particular restaurant of selected items.
+    // select the restaurant
+    // selecting the menus it automatically return the total cost
+    @Test
+
+    public void show_the_total_cost_of_item_selected_should_display(){
+        openingTime = LocalTime.parse("10:30:00");
+        closingTime = LocalTime.parse("22:00:00");
+        restaurant =new Restaurant("Amelie's cafe","Chennai",openingTime,closingTime);
+        restaurant.addToMenu("Sweet corn soup",119);
+        restaurant.addToMenu("Vegetable lasagne", 269);
+
+        String displayTheTotalAmount = restaurant.displayTotalAmount();
+        assertEquals(388,displayTheTotalAmount);
+
+    }
+
 }
