@@ -8,16 +8,19 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 
 class RestaurantTest {
-
+    
     @Mock
-    Restaurant restaurant;
+    public Restaurant restaurant;
     LocalTime openingTime;
     LocalTime closingTime;
+    List<String> selectedItem = new ArrayList<>();
     //>>>>>>>>>>>>>>>>>>>>>>>>>OPEN/CLOSED<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     //-------FOR THE 2 TESTS BELOW, YOU MAY USE THE CONCEPT OF MOCKING, IF YOU RUN INTO ANY TROUBLE
     @Test
@@ -50,9 +53,9 @@ class RestaurantTest {
     public void adding_item_to_menu_should_increase_menu_size_by_1(){
          openingTime = LocalTime.parse("10:30:00");
          closingTime = LocalTime.parse("22:00:00");
-        restaurant =new Restaurant("Amelie's cafe","Chennai",openingTime,closingTime);
-        restaurant.addToMenu("Sweet corn soup",119);
-        restaurant.addToMenu("Vegetable lasagne", 269);
+         restaurant =new Restaurant("Amelie's cafe","Chennai",openingTime,closingTime);
+         restaurant.addToMenu("Sweet corn soup",119);
+         restaurant.addToMenu("Vegetable lasagne", 269);
 
         int initialMenuSize = restaurant.getMenu().size();
         restaurant.addToMenu("Sizzling brownie",319);
@@ -62,9 +65,9 @@ class RestaurantTest {
     public void removing_item_from_menu_should_decrease_menu_size_by_1() throws itemNotFoundException {
          openingTime = LocalTime.parse("10:30:00");
          closingTime = LocalTime.parse("22:00:00");
-        restaurant =new Restaurant("Amelie's cafe","Chennai",openingTime,closingTime);
-        restaurant.addToMenu("Sweet corn soup",119);
-        restaurant.addToMenu("Vegetable lasagne", 269);
+         restaurant =new Restaurant("Amelie's cafe","Chennai",openingTime,closingTime);
+         restaurant.addToMenu("Sweet corn soup",119);
+         restaurant.addToMenu("Vegetable lasagne", 269);
 
         int initialMenuSize = restaurant.getMenu().size();
         restaurant.removeFromMenu("Vegetable lasagne");
@@ -74,9 +77,9 @@ class RestaurantTest {
     public void removing_item_that_does_not_exist_should_throw_exception() {
          openingTime = LocalTime.parse("10:30:00");
          closingTime = LocalTime.parse("22:00:00");
-        restaurant =new Restaurant("Amelie's cafe","Chennai",openingTime,closingTime);
-        restaurant.addToMenu("Sweet corn soup",119);
-        restaurant.addToMenu("Vegetable lasagne", 269);
+         restaurant =new Restaurant("Amelie's cafe","Chennai",openingTime,closingTime);
+         restaurant.addToMenu("Sweet corn soup",119);
+         restaurant.addToMenu("Vegetable lasagne", 269);
 
         assertThrows(itemNotFoundException.class,
                 ()->restaurant.removeFromMenu("French fries"));
@@ -85,6 +88,7 @@ class RestaurantTest {
     // Using TDD method to implement to display the total amount of the menu in particular restaurant of selected items.
     // select the restaurant
     // selecting the menus it automatically return the total cost
+
     @Test
 
     public void show_the_total_cost_of_item_selected_should_display(){
@@ -94,8 +98,11 @@ class RestaurantTest {
         restaurant.addToMenu("Sweet corn soup",119);
         restaurant.addToMenu("Vegetable lasagne", 269);
 
-        String displayTheTotalAmount = restaurant.displayTotalAmount();
-        assertEquals(388,displayTheTotalAmount);
+        selectedItem.add("Sweet corn soup");
+        selectedItem.add("Vegetable lasagne");
+
+        int displayTheTotalAmount = restaurant.displayAmount(selectedItem);
+        assertEquals(388, displayTheTotalAmount );
 
     }
 
